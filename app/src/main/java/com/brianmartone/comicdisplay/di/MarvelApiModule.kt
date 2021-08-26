@@ -1,7 +1,10 @@
 package com.brianmartone.comicdisplay.di
 
 import com.brianmartone.comicdisplay.BuildConfig
+import com.brianmartone.service.marvel.MarvelAuthGetter
+import com.brianmartone.service.marvel.MarvelAuthParams
 import com.brianmartone.service.marvel.MarvelKeys
+import com.brianmartone.service.marvel.toAuthParams
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +27,11 @@ class MarvelApiModule {
     @Provides
     @HiltQualifiers.MarvelBaseUrl
     fun providesBaseUrl() = "https://gateway.marvel.com"
+
+    @Provides
+    fun providesMarvelAuthGetter() = object : MarvelAuthGetter {
+        override fun getMarvelAuthParams(marvelKeys: MarvelKeys): MarvelAuthParams {
+            return marvelKeys.toAuthParams()
+        }
+    }
 }

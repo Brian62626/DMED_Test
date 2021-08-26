@@ -1,6 +1,5 @@
 package com.brianmartone.service.marvel
 
-import android.util.Log
 import com.brianmartone.service.marvel.network.dto.ComicDataWrapper
 import com.brianmartone.service.marvel.network.dto.MarvelImageVariant
 import okhttp3.Interceptor
@@ -10,11 +9,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.net.URL
 
-class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient, baseUrl: String) {
-    private val marvelService = initRetrofit(httpClient, keys, baseUrl).create(MarvelService::class.java)
-    private fun initRetrofit(okHttpClient: OkHttpClient, marvelKeys: MarvelKeys, baseUrl: String): Retrofit {
+class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient, baseUrl: String, authGetter: MarvelAuthGetter) {
+    private val marvelService = initRetrofit(httpClient, keys, baseUrl, authGetter).create(MarvelService::class.java)
+    private fun initRetrofit(okHttpClient: OkHttpClient, marvelKeys: MarvelKeys, baseUrl: String, authGetter: MarvelAuthGetter): Retrofit {
         val marvelHttpClient = okHttpClient.newBuilder()
-            .addInterceptor(MarvelHttpInterceptor(marvelKeys))
+            .addInterceptor(MarvelHttpInterceptor(marvelKeys, authGetter))
             .build()
         return Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -27,9 +26,9 @@ class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient, baseUrl: String) {
     }
 }
 
-private class MarvelHttpInterceptor(private val keys: MarvelKeys): Interceptor {
+private class MarvelHttpInterceptor(private val keys: MarvelKeys, private val authGetter: MarvelAuthGetter): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val authParams = getMarvelAuthParams(keys)
+        val authParams = authGetter.getMarvelAuthParams(keys)
         val origRequest = chain.request()
         val newUrl = origRequest.url().newBuilder()
             .addQueryParameter("apikey", authParams.apiKey)
@@ -40,6 +39,10 @@ private class MarvelHttpInterceptor(private val keys: MarvelKeys): Interceptor {
         requestBuilder.url(newUrl)
         return chain.proceed(requestBuilder.build())
     }
+}
+
+interface MarvelAuthGetter {
+    fun getMarvelAuthParams(marvelKeys: MarvelKeys): MarvelAuthParams
 }
 
 data class ComicDisplayData(

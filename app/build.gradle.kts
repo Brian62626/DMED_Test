@@ -13,11 +13,11 @@ android {
     defaultConfig {
         applicationId = "com.brianmartone.comicdisplay"
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.brianmartone.comicdisplay.InjectingTestRunner"
     }
 
     val properties = Properties()
@@ -63,6 +63,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.38.1")
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     testImplementation("junit:junit:4.+")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:3.14.9")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
 }
