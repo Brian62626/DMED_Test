@@ -8,9 +8,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.brianmartone.comicdisplay.R
+import com.brianmartone.service.marvel.ComicDisplayData
 import com.brianmartone.service.marvel.network.dto.MarvelImageVariant
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,19 +40,26 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.comicDisplayData.observe(viewLifecycleOwner) { displayData ->
-            this.view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = GONE
-            this.view?.findViewById<TextView>(R.id.comicLabel)?.let {
-                it.visibility = VISIBLE
-                it.text = displayData.title
-            }
-            if (displayData.description != null) {
-                this.view?.findViewById<TextView>(R.id.comicDescription)?.let {
-                    it.visibility = VISIBLE
-                    it.text = displayData.description
-                }
-            }
-            displayData.coverImageUrl?.let { Picasso.get().also { pic -> pic.isLoggingEnabled = true }.load(it.toExternalForm()).into(this.view?.findViewById(R.id.comicCoverImage)) }
+            displayComicData(displayData)
+        }
+        viewModel.marvelErrorData.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(activity, error, Toast.LENGTH_LONG).show()
         }
         viewModel.getComic(COMIC_ID_STRANGE_ACADEMY_12, MarvelImageVariant.DETAIL)
+    }
+
+    private fun displayComicData(displayData: ComicDisplayData) {
+        this.view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = GONE
+        this.view?.findViewById<TextView>(R.id.comicLabel)?.let {
+            it.visibility = VISIBLE
+            it.text = displayData.title
+        }
+        if (displayData.description != null) {
+            this.view?.findViewById<TextView>(R.id.comicDescription)?.let {
+                it.visibility = VISIBLE
+                it.text = displayData.description
+            }
+        }
+        displayData.coverImageUrl?.let { Picasso.get().also { pic -> pic.isLoggingEnabled = true }.load(it.toExternalForm()).into(this.view?.findViewById(R.id.comicCoverImage)) }
     }
 }

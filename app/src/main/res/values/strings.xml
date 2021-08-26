@@ -2,4 +2,6 @@
     <string name="app_name">Comic Display</string>
     <string name="comicLabelDefault">Loading...</string>
     <string name="comicbook_cover_image_contentdesc">Comicbook Cover Image</string>
+    <string name="http_exception_message">HTTP Error while getting Comic Data</string>
+    <string name="generic_exception_message">Error while getting Comic Data</string>
 </resources>
