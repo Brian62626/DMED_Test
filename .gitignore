@@ -25,3 +25,6 @@ lint
 # Mac
 .DS_Store
 **/.DS_Store
+
+# Don't check in your keys
+marvel.properties

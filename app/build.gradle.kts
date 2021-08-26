@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -16,7 +18,16 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    val properties = Properties()
+    properties.load(project.rootProject.file("marvel.properties").inputStream())
+    val marvelPublicKey = properties.getProperty("marvel.publickey").trim()
+    val marvelSecretKey = properties.getProperty("marvel.secretkey").trim()
+
     buildTypes {
+        all {
+            buildConfigField("String", "MARVEL_PUBLIC_KEY", "\"$marvelPublicKey\"")
+            buildConfigField("String", "MARVEL_PRIVATE_KEY", "\"$marvelSecretKey\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
@@ -39,6 +50,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
+
     implementation(project(":libs:serviceMarvel"))
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

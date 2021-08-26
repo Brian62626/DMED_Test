@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Comic Display</string>
+    <string name="comicLabelDefault">Hello World</string>
+    <string name="comicbook_cover_image_contentdesc">Comicbook Cover Image</string>
 </resources>
