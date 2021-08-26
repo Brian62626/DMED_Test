@@ -10,14 +10,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.net.URL
 
-class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient) {
-    private val marvelService = initRetrofit(httpClient, keys).create(MarvelService::class.java)
-    private fun initRetrofit(okHttpClient: OkHttpClient, marvelKeys: MarvelKeys): Retrofit {
+class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient, baseUrl: String) {
+    private val marvelService = initRetrofit(httpClient, keys, baseUrl).create(MarvelService::class.java)
+    private fun initRetrofit(okHttpClient: OkHttpClient, marvelKeys: MarvelKeys, baseUrl: String): Retrofit {
         val marvelHttpClient = okHttpClient.newBuilder()
             .addInterceptor(MarvelHttpInterceptor(marvelKeys))
             .build()
         return Retrofit.Builder()
-            .baseUrl("https://gateway.marvel.com")
+            .baseUrl(baseUrl)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(marvelHttpClient)
             .build()

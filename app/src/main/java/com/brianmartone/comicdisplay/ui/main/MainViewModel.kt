@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brianmartone.comicdisplay.BuildConfig
+import com.brianmartone.comicdisplay.di.HiltQualifiers
 import com.brianmartone.service.marvel.ComicDisplayData
 import com.brianmartone.service.marvel.MarvelApi
 import com.brianmartone.service.marvel.MarvelKeys
@@ -17,19 +18,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val marvelKeys: MarvelKeys,
-    val okHttpClient: OkHttpClient
+    marvelKeys: MarvelKeys,
+    okHttpClient: OkHttpClient,
+    @HiltQualifiers.MarvelBaseUrl val baseUrl: String
 ) : ViewModel() {
 
     val comicDisplayData = MutableLiveData<ComicDisplayData>()
-//    private val api = MarvelApi(
-//        MarvelKeys(
-//            publicKey = BuildConfig.MARVEL_PUBLIC_KEY,
-//            privateKey = BuildConfig.MARVEL_PRIVATE_KEY
-//        ),
-//        OkHttpClient()
-//    )
-    private val api = MarvelApi(marvelKeys, okHttpClient)
+    private val api = MarvelApi(marvelKeys, okHttpClient, baseUrl)
 
     fun getComic(id: Int, imageVariant: MarvelImageVariant){
         viewModelScope.launch {

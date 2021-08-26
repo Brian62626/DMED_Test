@@ -20,4 +20,8 @@ class MarvelApiModule {
 
     @Provides
     fun providesOkHttpClient() = OkHttpClient()
+
+    @Provides
+    @HiltQualifiers.MarvelBaseUrl
+    fun providesBaseUrl() = "https://gateway.marvel.com"
 }
