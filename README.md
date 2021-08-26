@@ -17,9 +17,9 @@ marvel.secretkey=def456abc1def456abc1def456abc156abc1de12
 
 ## Test Examples
 
-[Unit Test, for the OkHttp Interceptor in MarvelService library](src/test/java/com/brianmartone/service/marvel/MarvelHttpInterceptorTest.kt)
+[Unit Test, for the OkHttp Interceptor in MarvelService library](libs/serviceMarvel/src/test/java/com/brianmartone/service/marvel/MarvelHttpInterceptorTest.kt)
 
-[UI Test, for the app's Main Activity](src/androidTest/java/com/brianmartone/comicdisplay/ExampleInstrumentedTest.kt)
+[UI Test, for the app's Main Activity](app/src/androidTest/java/com/brianmartone/comicdisplay/ExampleInstrumentedTest.kt)
 
 ## Libraries used
 
