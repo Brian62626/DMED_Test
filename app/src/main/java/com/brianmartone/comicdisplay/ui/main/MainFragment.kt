@@ -15,6 +15,8 @@ import com.brianmartone.service.marvel.network.dto.MarvelImageVariant
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val COMIC_ID_STRANGE_ACADEMY_12 = 79809
+
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
@@ -35,14 +37,20 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.comicDisplayData.observe(this) { displayData ->
+        viewModel.comicDisplayData.observe(viewLifecycleOwner) { displayData ->
             this.view?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = GONE
             this.view?.findViewById<TextView>(R.id.comicLabel)?.let {
                 it.visibility = VISIBLE
                 it.text = displayData.title
             }
+            if (displayData.description != null) {
+                this.view?.findViewById<TextView>(R.id.comicDescription)?.let {
+                    it.visibility = VISIBLE
+                    it.text = displayData.description
+                }
+            }
             displayData.coverImageUrl?.let { Picasso.get().also { pic -> pic.isLoggingEnabled = true }.load(it.toExternalForm()).into(this.view?.findViewById(R.id.comicCoverImage)) }
         }
-        viewModel.getComic(79809, MarvelImageVariant.FULL)
+        viewModel.getComic(COMIC_ID_STRANGE_ACADEMY_12, MarvelImageVariant.DETAIL)
     }
 }
