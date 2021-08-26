@@ -7,12 +7,14 @@ internal data class ComicImage(
     private val extension: String?
 ) {
     fun getImageUrl(variant: MarvelImageVariant): URL {
-        return URL(when(variant) {
-            MarvelImageVariant.FULL -> "$path.$extension"
-            MarvelImageVariant.DETAIL -> "$path/detail.$extension"
-            MarvelImageVariant.LANDSCAPE_XLARGE -> "$path/landscape_xlarge.$extension"
-            MarvelImageVariant.PORTRAIT_UNCANNY -> "$path/portrait_uncanny.$extension"
-        })
+        return URL(
+            when (variant) {
+                MarvelImageVariant.FULL -> "$path.$extension"
+                MarvelImageVariant.DETAIL -> "$path/detail.$extension"
+                MarvelImageVariant.LANDSCAPE_XLARGE -> "$path/landscape_xlarge.$extension"
+                MarvelImageVariant.PORTRAIT_UNCANNY -> "$path/portrait_uncanny.$extension"
+            }
+        )
     }
 }
 

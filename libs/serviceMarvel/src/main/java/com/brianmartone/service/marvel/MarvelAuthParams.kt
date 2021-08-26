@@ -9,13 +9,14 @@ data class MarvelAuthParams(
     val apiKey: String
 )
 
-fun MarvelKeys.toAuthParams(): MarvelAuthParams{
+fun MarvelKeys.toAuthParams(): MarvelAuthParams {
     val ts = "${System.currentTimeMillis()}"
     val md5Digest = MessageDigest.getInstance("MD5")
-    val hashInput = "$ts${privateKey}${publicKey}"
+    val hashInput = "$ts${privateKey}$publicKey"
     val md5ByteArray = md5Digest.digest(hashInput.toByteArray(UTF_8))
     val thirtyTwoBitHash = md5ByteArray.joinToString("") {
-            byte -> "%02x".format(byte)
+        byte ->
+        "%02x".format(byte)
     }
     return MarvelAuthParams(
         ts = ts,

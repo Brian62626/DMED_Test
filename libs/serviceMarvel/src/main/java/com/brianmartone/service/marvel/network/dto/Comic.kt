@@ -1,8 +1,6 @@
 package com.brianmartone.service.marvel.network.dto
 
-import java.util.*
-
-internal data class Comic (
+internal data class Comic(
     val id: Int?,
     val digitalId: Int?,
     val title: String?,
@@ -31,4 +29,4 @@ internal data class Comic (
     val characters: CharacterList?,
     val stories: StoryList?,
     val events: EventList?
-    )
+)

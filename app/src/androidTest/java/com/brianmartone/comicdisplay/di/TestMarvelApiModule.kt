@@ -1,15 +1,13 @@
 package com.brianmartone.comicdisplay.di
 
-import com.brianmartone.comicdisplay.BuildConfig
 import com.brianmartone.service.marvel.MarvelAuthGetter
 import com.brianmartone.service.marvel.MarvelAuthParams
 import com.brianmartone.service.marvel.MarvelKeys
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.FragmentComponent
-
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient
 
@@ -47,6 +45,5 @@ class TestMarvelApiModule {
                 apiKey = marvelKeys.publicKey
             )
         }
-
     }
 }

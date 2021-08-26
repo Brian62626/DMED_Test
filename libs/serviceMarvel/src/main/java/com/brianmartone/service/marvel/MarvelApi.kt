@@ -26,7 +26,7 @@ class MarvelApi(keys: MarvelKeys, httpClient: OkHttpClient, baseUrl: String, aut
     }
 }
 
-private class MarvelHttpInterceptor(private val keys: MarvelKeys, private val authGetter: MarvelAuthGetter): Interceptor {
+private class MarvelHttpInterceptor(private val keys: MarvelKeys, private val authGetter: MarvelAuthGetter) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val authParams = authGetter.getMarvelAuthParams(keys)
         val origRequest = chain.request()
@@ -51,11 +51,11 @@ data class ComicDisplayData(
     val coverImageUrl: URL?
 )
 
-private fun ComicDataWrapper.toDisplayData(imageVariant: MarvelImageVariant): ComicDisplayData{
+private fun ComicDataWrapper.toDisplayData(imageVariant: MarvelImageVariant): ComicDisplayData {
     val title = this.data?.results?.get(0)?.title
     val description = this.data?.results?.get(0)?.description
     val coverImageUrl = this.data?.results?.get(0)?.images?.get(0)?.getImageUrl(imageVariant)
-    if(title.isNullOrBlank()){
+    if (title.isNullOrBlank()) {
         throw MalformedApiResponseException("Title was not found from Marvel REST API service.")
     }
     return ComicDisplayData(

@@ -1,7 +1,6 @@
 package com.brianmartone.service.marvel
 
 import com.brianmartone.service.marvel.network.dto.ComicDataWrapper
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
