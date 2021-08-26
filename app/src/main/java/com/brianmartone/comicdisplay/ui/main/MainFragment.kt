@@ -1,8 +1,6 @@
 package com.brianmartone.comicdisplay.ui.main
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -14,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.brianmartone.comicdisplay.R
 import com.brianmartone.service.marvel.network.dto.MarvelImageVariant
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     companion object {
