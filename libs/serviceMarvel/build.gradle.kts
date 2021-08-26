@@ -11,4 +11,5 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     testImplementation("junit:junit:4.+")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
